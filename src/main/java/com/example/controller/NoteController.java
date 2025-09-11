@@ -10,6 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RequiredArgsConstructor
 @RequestMapping("/note")
 @Controller
@@ -48,7 +50,10 @@ public class NoteController {
     }
 
     @GetMapping("/list")
-    public String listNotes(Model model) {
+    public String listNotes(Model model, Principal principal) {
+        if (principal != null) {
+            model.addAttribute("username", principal.getName());
+        }
         model.addAttribute("notes", noteService.listAll());
         return "note/list";
     }
