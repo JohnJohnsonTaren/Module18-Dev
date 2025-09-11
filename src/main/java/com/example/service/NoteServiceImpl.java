@@ -39,13 +39,14 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     @Transactional
-    public void update(Note note) {
+    public Note update(Note note) {
         Long id = note.getId();
         Note existingNote = getById(id);
 
         existingNote.setTitle(note.getTitle());
         existingNote.setContent(note.getContent());
         noteRepository.save(existingNote);
+        return existingNote;
     }
 
     @Override
